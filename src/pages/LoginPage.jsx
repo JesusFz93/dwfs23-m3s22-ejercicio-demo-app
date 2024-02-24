@@ -12,12 +12,21 @@ const LoginPage = () => {
   const handleInciarSesion = async (e) => {
     e.preventDefault();
 
+    // console.log(form);
+
     try {
-      const resp = await loginService();
+      const resp = await loginService(form);
       console.log(resp.data.data);
     } catch (error) {
       console.log(error.response.data.msg);
     }
+  };
+
+  const handleChange = (e) => {
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value,
+    });
   };
 
   return (
@@ -32,7 +41,14 @@ const LoginPage = () => {
               <label htmlFor="inputUserName" className="form-label">
                 User name
               </label>
-              <input type="text" className="form-control" id="inputUserName" />
+              <input
+                type="text"
+                className="form-control"
+                id="inputUserName"
+                name="user_name"
+                value={form.user_name}
+                onChange={handleChange}
+              />
             </div>
             <div className="mb-3">
               <label htmlFor="inputPassword" className="form-label">
@@ -42,6 +58,9 @@ const LoginPage = () => {
                 type="password"
                 className="form-control"
                 id="inputPassword"
+                name="password"
+                value={form.password}
+                onChange={handleChange}
               />
             </div>
             <button type="submit" className="btn btn-primary">
