@@ -3,14 +3,14 @@ import authReducer from "./AuthReducer";
 import PropTypes from "prop-types";
 import { useReducer } from "react";
 
-import { loginService } from "../services/authServices";
+import { loginService, registerService } from "../services/authServices";
 
-const initialState = {
+const initialGlobalState = {
   user: null,
 };
 
 const AuthState = ({ children }) => {
-  const [globalState, dispatch] = useReducer(authReducer, initialState);
+  const [globalState, dispatch] = useReducer(authReducer, initialGlobalState);
 
   const iniciarSesion = async (form) => {
     try {
@@ -25,11 +25,25 @@ const AuthState = ({ children }) => {
     }
   };
 
+  const registrarUsuario = async (form) => {
+    try {
+      const resp = await registerService(form);
+      // console.log(resp.data.data);
+      dispatch({
+        type: "REGISTRAR_USUARIO",
+        payload: resp.data.data,
+      });
+    } catch (error) {
+      console.log(error.response.data.msg);
+    }
+  };
+
   return (
     <AuthContext.Provider
       value={{
         user: globalState.user,
         iniciarSesion,
+        registrarUsuario,
       }}
     >
       {children}

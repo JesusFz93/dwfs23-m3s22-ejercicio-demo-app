@@ -1,5 +1,6 @@
 import { registerService } from "../services/authServices";
-import { useState } from "react";
+import { useState, useContext } from "react";
+import AuthContext from "../context/AuthContext";
 
 const initForm = {
   user_name: "",
@@ -7,21 +8,25 @@ const initForm = {
 };
 
 const RegisterPage = () => {
+  const { user, registrarUsuario } = useContext(AuthContext);
+
   const [form, setForm] = useState(initForm);
-  const [user, setUser] = useState({});
+  // const [user, setUser] = useState({});
 
   const handleInciarSesion = async (e) => {
     e.preventDefault();
 
+    await registrarUsuario(form);
+
     // console.log(form);
 
-    try {
-      const resp = await registerService(form);
-      // console.log(resp.data.data);
-      setUser(resp.data.data);
-    } catch (error) {
-      console.log(error.response.data.msg);
-    }
+    // try {
+    //   // const resp = await registerService(form);
+    //   // // console.log(resp.data.data);
+    //   // setUser(resp.data.data);
+    // } catch (error) {
+    //   console.log(error.response.data.msg);
+    // }
   };
 
   const handleChange = (e) => {
