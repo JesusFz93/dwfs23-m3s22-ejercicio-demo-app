@@ -1,6 +1,9 @@
 import { NavLink } from "react-router-dom";
+import AuthContext from "../context/AuthContext";
+import { useContext } from "react";
 
 const PublicNavbar = () => {
+  const { user } = useContext(AuthContext);
   return (
     <nav className="navbar navbar-expand-lg bg-dark navbar-dark">
       <div className="container">
@@ -52,7 +55,7 @@ const PublicNavbar = () => {
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
               >
-                Cuenta
+                {user ? user.user_name : "Cuenta"}
               </a>
               <ul className="dropdown-menu dropdown-menu-end">
                 <li>

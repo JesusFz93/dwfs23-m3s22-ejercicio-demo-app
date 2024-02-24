@@ -1,5 +1,6 @@
-import { loginService } from "../services/authServices";
-import { useState } from "react";
+// import { loginService } from "../services/authServices";
+import { useState, useContext } from "react";
+import AuthContext from "../context/AuthContext";
 
 const initForm = {
   user_name: "",
@@ -8,20 +9,23 @@ const initForm = {
 
 const LoginPage = () => {
   const [form, setForm] = useState(initForm);
-  const [user, setUser] = useState({});
+  const { user, iniciarSesion } = useContext(AuthContext);
+  // const [user, setUser] = useState({});
 
   const handleInciarSesion = async (e) => {
     e.preventDefault();
 
+    await iniciarSesion(form);
+
     // console.log(form);
 
-    try {
-      const resp = await loginService(form);
-      // console.log(resp.data.data);
-      setUser(resp.data.data);
-    } catch (error) {
-      console.log(error.response.data.msg);
-    }
+    // try {
+    //   const resp = await loginService(form);
+    //   // console.log(resp.data.data);
+    //   setUser(resp.data.data);
+    // } catch (error) {
+    //   console.log(error.response.data.msg);
+    // }
   };
 
   const handleChange = (e) => {
