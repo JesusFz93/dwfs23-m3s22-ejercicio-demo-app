@@ -1,4 +1,25 @@
+import { loginService } from "../services/authServices";
+import { useState } from "react";
+
+const initForm = {
+  user_name: "",
+  password: "",
+};
+
 const LoginPage = () => {
+  const [form, setForm] = useState(initForm);
+
+  const handleInciarSesion = async (e) => {
+    e.preventDefault();
+
+    try {
+      const resp = await loginService();
+      console.log(resp.data.data);
+    } catch (error) {
+      console.log(error.response.data.msg);
+    }
+  };
+
   return (
     <>
       <header className="row col">
@@ -6,7 +27,7 @@ const LoginPage = () => {
       </header>
       <main className="row">
         <article className="col">
-          <form>
+          <form onSubmit={handleInciarSesion}>
             <div className="mb-3">
               <label htmlFor="inputUserName" className="form-label">
                 User name
