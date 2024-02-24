@@ -14,4 +14,13 @@ const loginService = async (form) => {
   return resp;
 };
 
-export { loginService };
+const registerService = async (form) => {
+  const resp = await axios.post(
+    "https://dwfs23-m3s21-demo-api.onrender.com/auth/registrar_usuario",
+    form
+  );
+
+  return resp;
+};
+
+export { loginService, registerService };

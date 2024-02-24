@@ -8,6 +8,7 @@ const initForm = {
 
 const LoginPage = () => {
   const [form, setForm] = useState(initForm);
+  const [user, setUser] = useState({});
 
   const handleInciarSesion = async (e) => {
     e.preventDefault();
@@ -16,7 +17,8 @@ const LoginPage = () => {
 
     try {
       const resp = await loginService(form);
-      console.log(resp.data.data);
+      // console.log(resp.data.data);
+      setUser(resp.data.data);
     } catch (error) {
       console.log(error.response.data.msg);
     }
@@ -69,6 +71,11 @@ const LoginPage = () => {
           </form>
         </article>
       </main>
+      <section className="row">
+        <article className="col">
+          <pre>{JSON.stringify(user, null, 2)}</pre>
+        </article>
+      </section>
     </>
   );
 };
