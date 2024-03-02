@@ -6,7 +6,7 @@ import { useReducer } from "react";
 import { loginService, registerService } from "../services/authServices";
 
 const initialGlobalState = {
-  user: null,
+  user: {},
 };
 
 const AuthState = ({ children }) => {

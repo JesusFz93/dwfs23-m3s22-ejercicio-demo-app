@@ -11,6 +11,7 @@ import {
 const initialState = {
   products: [],
   product: {},
+  cart: [],
 };
 
 const ProductState = ({ children }) => {
@@ -36,6 +37,23 @@ const ProductState = ({ children }) => {
     });
   }, []);
 
+  const addCartProduct = async (id) => {
+    const resp = await obtenerProductoService(id);
+    console.log(resp.data.data);
+
+    dispatch({
+      type: "AGREGAR_CART_PRODUCT",
+      payload: resp.data.data,
+    });
+  };
+
+  const deleteCartProduct = async (id) => {
+    dispatch({
+      type: "DELETE_CART_PRODUCT",
+      payload: id,
+    });
+  };
+
   return (
     <ProductContext.Provider
       value={{
@@ -43,6 +61,9 @@ const ProductState = ({ children }) => {
         product: globalState.product,
         obtenerProductos,
         obtenerProducto,
+        addCartProduct,
+        cart: globalState.cart,
+        deleteCartProduct,
       }}
     >
       {children}
