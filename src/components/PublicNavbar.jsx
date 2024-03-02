@@ -51,7 +51,7 @@ const PublicNavbar = () => {
                   isActive ? "nav-link active" : "nav-link"
                 }
                 aria-current="page"
-                to="/prodcuts"
+                to="/products"
               >
                 Products
               </NavLink>

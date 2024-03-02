@@ -1,9 +1,12 @@
-import { useReducer } from "react";
+import { useReducer, useCallback } from "react";
 import ProductContext from "./ProductContext";
 import productReducer from "./ProductReducer";
 import PropTypes from "prop-types";
 
-import { obtenerProductosService } from "../services/productsServices";
+import {
+  obtenerProductoService,
+  obtenerProductosService,
+} from "../services/productsServices";
 
 const initialState = {
   products: [],
@@ -13,12 +16,25 @@ const initialState = {
 const ProductState = ({ children }) => {
   const [globalState, dispatch] = useReducer(productReducer, initialState);
 
-  const obtenerProductos = async () => {
+  const obtenerProductos = useCallback(async () => {
     const resp = await obtenerProductosService();
-    console.log(resp.data.data);
-  };
+    // console.log(resp.data.data);
 
-  const obtenerProducto = () => {};
+    dispatch({
+      type: "OBTENER_PRODUCTOS",
+      payload: resp.data.data,
+    });
+  }, []);
+
+  const obtenerProducto = useCallback(async (id) => {
+    const resp = await obtenerProductoService(id);
+    // console.log(resp.data.data);
+
+    dispatch({
+      type: "OBTENER_PRODUCTO",
+      payload: resp.data.data,
+    });
+  }, []);
 
   return (
     <ProductContext.Provider

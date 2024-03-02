@@ -1,26 +1,39 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import ProductContext from "../context/ProductContext";
+import { NavLink } from "react-router-dom";
 
 const ProductsPage = () => {
-  const { obtenerProductos } = useContext(ProductContext);
+  const { obtenerProductos, products } = useContext(ProductContext);
 
-  const handleClick = () => {
+  useEffect(() => {
     obtenerProductos();
-  };
+  }, [obtenerProductos]);
 
   return (
     <>
-      <header className="row col">
-        <h1>Products Page</h1>
-      </header>
-      <main className="row">
-        <article className="col">
-          <p>Contenido de la pagina productos</p>
-          <button className="btn btn-info" onClick={handleClick}>
-            Obtener productos
-          </button>
-        </article>
-      </main>
+      <div className="row row-cols-1 row-cols-md-3 g-4">
+        {products.map((product) => (
+          <div key={product.id} className="col">
+            <div className="card h-100">
+              <img
+                src={product.image}
+                className="card-img-top"
+                alt={product.name}
+              />
+              <div className="card-body">
+                <h5 className="card-title">{product.name}</h5>
+                <p className="card-text">{product.description}</p>
+                <NavLink
+                  className="btn btn-info"
+                  to={`/products/${product.id}`}
+                >
+                  Ver mas...
+                </NavLink>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
     </>
   );
 };

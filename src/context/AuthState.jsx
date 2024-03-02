@@ -51,7 +51,7 @@ const AuthState = ({ children }) => {
   );
 };
 
-AuthState.PropTypes = {
+AuthState.propTypes = {
   children: PropTypes.node,
 };
 
