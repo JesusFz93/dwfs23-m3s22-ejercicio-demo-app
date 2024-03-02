@@ -3,6 +3,8 @@ import ProductContext from "./ProductContext";
 import productReducer from "./ProductReducer";
 import PropTypes from "prop-types";
 
+import { obtenerProductosService } from "../services/productsServices";
+
 const initialState = {
   products: [],
   product: {},
@@ -11,7 +13,10 @@ const initialState = {
 const ProductState = ({ children }) => {
   const [globalState, dispatch] = useReducer(productReducer, initialState);
 
-  const obtenerProductos = () => {};
+  const obtenerProductos = async () => {
+    const resp = await obtenerProductosService();
+    console.log(resp.data.data);
+  };
 
   const obtenerProducto = () => {};
 
