@@ -24,4 +24,14 @@ const registerService = async (form) => {
   return resp;
 };
 
-export { loginService, registerService };
+const renovarTokenService = async () => {
+  const resp = await axios.get("http://localhost:4000/auth/validar_usuario", {
+    headers: {
+      "x-token": localStorage.getItem("token"),
+    },
+  });
+
+  return resp;
+};
+
+export { loginService, registerService, renovarTokenService };

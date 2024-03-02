@@ -1,9 +1,13 @@
 import AuthContext from "./AuthContext";
 import authReducer from "./AuthReducer";
 import PropTypes from "prop-types";
-import { useReducer } from "react";
+import { useCallback, useReducer } from "react";
 
-import { loginService, registerService } from "../services/authServices";
+import {
+  loginService,
+  registerService,
+  renovarTokenService,
+} from "../services/authServices";
 
 const initialGlobalState = {
   user: {},
@@ -20,6 +24,8 @@ const AuthState = ({ children }) => {
         type: "INICIAR_SESION",
         payload: resp.data.data,
       });
+
+      localStorage.setItem("token", resp.data.token);
     } catch (error) {
       console.log(error.response.data.msg);
     }
@@ -33,9 +39,32 @@ const AuthState = ({ children }) => {
         type: "REGISTRAR_USUARIO",
         payload: resp.data.data,
       });
+      localStorage.setItem("token", resp.data.token);
     } catch (error) {
       console.log(error.response.data.msg);
     }
+  };
+
+  const renovarToken = useCallback(async () => {
+    try {
+      const resp = await renovarTokenService();
+      // console.log(resp.data.data);
+      dispatch({
+        type: "INICIAR_SESION",
+        payload: resp.data.data,
+      });
+      localStorage.setItem("token", resp.data.token);
+    } catch (error) {
+      console.log(error.response.data.msg);
+    }
+  }, []);
+
+  const logout = () => {
+    dispatch({
+      type: "LOGOUT",
+    });
+
+    localStorage.removeItem("token");
   };
 
   return (
@@ -44,6 +73,8 @@ const AuthState = ({ children }) => {
         user: globalState.user,
         iniciarSesion,
         registrarUsuario,
+        renovarToken,
+        logout,
       }}
     >
       {children}
