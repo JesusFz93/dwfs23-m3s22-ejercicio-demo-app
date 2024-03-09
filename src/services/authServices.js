@@ -8,7 +8,7 @@ const loginService = async (form) => {
   // };
 
   const resp = await axios.post(
-    "http://localhost:4000/auth/iniciar_sesion",
+    "https://dwfs23-m3s21-demo-api.onrender.com/auth/iniciar_sesion",
     form
   );
 
@@ -17,7 +17,7 @@ const loginService = async (form) => {
 
 const registerService = async (form) => {
   const resp = await axios.post(
-    "http://localhost:4000/auth/registrar_usuario",
+    "https://dwfs23-m3s21-demo-api.onrender.com/auth/registrar_usuario",
     form
   );
 
@@ -25,11 +25,14 @@ const registerService = async (form) => {
 };
 
 const renovarTokenService = async () => {
-  const resp = await axios.get("http://localhost:4000/auth/validar_usuario", {
-    headers: {
-      "x-token": localStorage.getItem("token"),
-    },
-  });
+  const resp = await axios.get(
+    "https://dwfs23-m3s21-demo-api.onrender.com/auth/validar_usuario",
+    {
+      headers: {
+        "x-token": localStorage.getItem("token"),
+      },
+    }
+  );
 
   return resp;
 };

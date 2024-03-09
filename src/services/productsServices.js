@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const URL = "http://localhost:4000/productos";
+const URL = "https://dwfs23-m3s21-demo-api.onrender.com/productos";
 
 const obtenerProductosService = async () => {
   const resp = await axios.get(URL);

@@ -18,6 +18,7 @@ import CartPage from "../pages/CartPage";
 import { useContext, useEffect } from "react";
 import AuthContext from "../context/AuthContext";
 import ProfilePage from "../pages/ProfilePage";
+import AdminPage from "../pages/AdminPage";
 
 const AppRouter = () => {
   const { renovarToken, user } = useContext(AuthContext);
@@ -40,6 +41,11 @@ const AppRouter = () => {
 
           {user.user_name ? (
             <>
+              {user.role_name === "ADMIN" && (
+                <>
+                  <Route path="/admin" element={<AdminPage />} />
+                </>
+              )}
               {/* Privadas */}
               <Route path="/profile" element={<ProfilePage />} />
             </>
